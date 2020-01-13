@@ -7,6 +7,7 @@ class WsView extends StatefulWidget {
 
 class _WsViewState extends State<WsView> {
   final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _messageToSendController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _WsViewState extends State<WsView> {
               child: TextField(
                 maxLines: 10,
                 style: TextStyle(color: Colors.white70),
-                controller: _inputController,
+                controller: _messageToSendController,
                 decoration: InputDecoration(
                     fillColor: Colors.white10,
                     filled: true,
