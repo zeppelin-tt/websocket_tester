@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:websocket_manager2/RequestProvider.dart';
+import 'package:websocket_manager2/ResponseProvider.dart';
 
 class WsView extends StatefulWidget {
   @override
@@ -11,6 +14,8 @@ class _WsViewState extends State<WsView> {
 
   @override
   Widget build(BuildContext context) {
+    final requestProvider = Provider.of<RequestProvider>(context);
+    final responseProvider = Provider.of<ResponseProvider>(context);
     return SafeArea(
       child: Material(
         color: Colors.black,
@@ -29,11 +34,12 @@ class _WsViewState extends State<WsView> {
                     style: TextStyle(color: Colors.white70),
                     controller: _inputController,
                     decoration: InputDecoration(
-                        fillColor: Colors.white10,
-                        filled: true,
-                        border: InputBorder.none,
-                        hintText: 'address',
-                        hintStyle: TextStyle(color: Colors.white70)),
+                      fillColor: Colors.white10,
+                      filled: true,
+                      border: InputBorder.none,
+                      hintText: 'address',
+                      hintStyle: TextStyle(color: Colors.white70),
+                    ),
                   ),
                 ),
                 SizedBox(
