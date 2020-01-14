@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:websocket_manager2/AddressProvider.dart';
 import 'package:websocket_manager2/RequestProvider.dart';
 import 'package:websocket_manager2/ResponseProvider.dart';
 
@@ -9,13 +10,15 @@ class WsView extends StatefulWidget {
 }
 
 class _WsViewState extends State<WsView> {
-  final TextEditingController _inputController = TextEditingController();
-  final TextEditingController _messageToSendController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _messageToSendController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final requestProvider = Provider.of<RequestProvider>(context);
     final responseProvider = Provider.of<ResponseProvider>(context);
+    final addressProvider = Provider.of<AddressProvider>(context);
     return SafeArea(
       child: Material(
         color: Colors.black,
@@ -32,7 +35,7 @@ class _WsViewState extends State<WsView> {
                   child: TextField(
                     maxLines: 1,
                     style: TextStyle(color: Colors.white70),
-                    controller: _inputController,
+                    controller: _addressController,
                     decoration: InputDecoration(
                       fillColor: Colors.white10,
                       filled: true,
@@ -47,8 +50,14 @@ class _WsViewState extends State<WsView> {
                   width: 100.0,
                   child: FlatButton(
                     color: Colors.blue,
-                    child: Text('Connect', style: TextStyle(color: Colors.white70, fontStyle: FontStyle.italic, fontSize: 16.0)),
-                    onPressed: () {},
+                    child: Text('Connect',
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 16.0)),
+                    onPressed: () {
+                      addressProvider.setAddress(_addressController.text);
+                    },
                   ),
                 )
               ],
@@ -69,15 +78,22 @@ class _WsViewState extends State<WsView> {
               ),
             ),
             SizedBox(height: 35.0),
-            Text('text', style: TextStyle(color: Colors.white, fontSize: 18.0)),
+            Text(responseProvider.response ?? "response",
+                style: TextStyle(color: Colors.white, fontSize: 18.0)),
             Spacer(),
             SizedBox(
               height: 48.0,
               width: 400.0,
               child: FlatButton(
                 color: Colors.blue,
-                child: Text('Send message', style: TextStyle(color: Colors.white70, fontStyle: FontStyle.italic, fontSize: 16.0)),
-                onPressed: () {},
+                child: Text('Send message',
+                    style: TextStyle(
+                        color: Colors.white70,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 16.0)),
+                onPressed: () {
+                  requestProvider.setRequest(_messageToSendController.text);
+                },
               ),
             ),
             SizedBox(height: 10.0),

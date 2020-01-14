@@ -7,7 +7,7 @@ class AddressProvider with ChangeNotifier {
 
   String get address => _address;
 
-  setRequest(String address) {
+  setAddress(String address) {
     this._address = address;
     notifyListeners();
   }

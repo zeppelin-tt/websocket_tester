@@ -10,33 +10,38 @@ class Connection {
   RequestProvider requestProvider;
   ResponseProvider responseProvider;
   AddressProvider addressProvider;
+  WebsocketManager _socket;
 
   Connection({BuildContext context}) {
     requestProvider = Provider.of<RequestProvider>(context);
     responseProvider = Provider.of<ResponseProvider>(context);
     addressProvider = Provider.of<AddressProvider>(context);
-    _init();
+    addressProvider.addListener(_connect);
   }
 
-  _init() {
-    final socket = WebsocketManager(addressProvider.address);
-    socket.onClose((dynamic message) {
+  _connect() {
+    if (_socket != null) _disconnect();
+    _socket = WebsocketManager(addressProvider.address);
+    _socket.onClose((dynamic message) {
       print('close');
     });
-    socket.onMessage((dynamic message) {
+    _socket.onMessage((dynamic message) {
       print('recv: $message');
       responseProvider.setResponse(message);
-      if (messageNum == 10) {
-        socket.close();
-      } else {
-        messageNum += 1;
-        final String msg = '$messageNum: ${DateTime.now()}';
-        print('send: $msg');
-        socket.send(msg);
-      }
     });
-    socket.connect();
+    requestProvider.addListener(_send);
+    _socket.connect();
   }
+
+  _send() {
+    _socket.send(requestProvider.request);
+  }
+
+  _disconnect() {
+    _socket.close();
+    requestProvider.removeListener(_send);
+  }
+
 }
 
 
