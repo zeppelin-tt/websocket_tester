@@ -2,20 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:websocket_manager/websocket_manager.dart';
 import 'package:websocket_manager2/AddressProvider.dart';
+import 'package:websocket_manager2/HistoryItem.dart';
+import 'package:websocket_manager2/HistoryProvider.dart';
 import 'package:websocket_manager2/RequestProvider.dart';
-import 'package:websocket_manager2/ResponseProvider.dart';
 
 class Connection {
   int messageNum = 0;
   RequestProvider requestProvider;
-  ResponseProvider responseProvider;
   AddressProvider addressProvider;
+  HistoryProvider historyProvider;
   WebsocketManager _socket;
 
   Connection({BuildContext context}) {
     requestProvider = Provider.of<RequestProvider>(context);
-    responseProvider = Provider.of<ResponseProvider>(context);
     addressProvider = Provider.of<AddressProvider>(context);
+    historyProvider = Provider.of<HistoryProvider>(context);
     addressProvider.addListener(_connect);
   }
 
@@ -27,7 +28,7 @@ class Connection {
     });
     _socket.onMessage((dynamic message) {
       print('recv: $message');
-      responseProvider.setResponse(message);
+      historyProvider.addMessage(HistoryItem(MessageFocus.income, message));
     });
     requestProvider.addListener(_send);
     _socket.connect();
@@ -41,7 +42,4 @@ class Connection {
     _socket.close();
     requestProvider.removeListener(_send);
   }
-
 }
-
-
