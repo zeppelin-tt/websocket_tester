@@ -26,10 +26,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    Connection(context: context);
+  Connection connection;
+
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    if (connection == null) connection = Connection(context: context);
   }
 
   @override
