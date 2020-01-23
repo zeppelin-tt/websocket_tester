@@ -20,10 +20,20 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    Connection(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Connection(context: context);
     return MaterialApp(
       home: WsView(),
     );

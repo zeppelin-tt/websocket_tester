@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:websocket_manager2/AddressProvider.dart';
 import 'package:websocket_manager2/HistoryItem.dart';
@@ -35,17 +34,17 @@ class _WsViewState extends State<WsView> {
           color: Colors.black,
           child: Stack(
             children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: _infoHeaderHeight),
-                    Container(
-                      height: _maxHeight - _infoHeaderHeight - _inputHeight - _distanceBetween * 2 - MediaQuery.of(context).viewInsets.bottom ,
-                      margin: EdgeInsets.symmetric(horizontal: _horizontalPadding),
-                      decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(_borderRadius)),
-                    )
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: _infoHeaderHeight),
+                  Container(
+                    height: _maxHeight - _infoHeaderHeight - _inputHeight - _distanceBetween * 2 - MediaQuery.of(context).viewInsets.bottom,
+                    margin: EdgeInsets.symmetric(horizontal: _horizontalPadding),
+                    decoration: BoxDecoration(color: Colors.white24, borderRadius: BorderRadius.circular(_borderRadius)),
+                  )
+                ],
+              ),
               Column(
                 children: <Widget>[
                   SizedBox(height: _distanceBetween),
@@ -60,7 +59,7 @@ class _WsViewState extends State<WsView> {
                           Container(
                             height: double.infinity,
                             width: _maxWidth * .6,
-                            decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(_borderRadius)),
+                            decoration: BoxDecoration(color: Colors.white24, borderRadius: BorderRadius.circular(_borderRadius)),
                             child: TextField(
                               maxLines: 1,
                               style: TextStyle(color: Colors.white70),
@@ -93,7 +92,7 @@ class _WsViewState extends State<WsView> {
                   Container(
                     constraints: BoxConstraints(maxHeight: _maxHeight * .32, minHeight: _inputHeight),
                     margin: EdgeInsets.symmetric(horizontal: _horizontalPadding),
-                    decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(_borderRadius)),
+                    decoration: BoxDecoration(color: Colors.white24, borderRadius: BorderRadius.circular(_borderRadius)),
                     child: TextField(
                       minLines: 1,
                       maxLines: 10,
@@ -157,7 +156,6 @@ class _WsViewState extends State<WsView> {
   }
 }
 
-
 Size getStringSize(String text, double fontSize, [double maxWidth]) {
   RenderParagraph renderParagraph = RenderParagraph(
     TextSpan(
@@ -177,7 +175,7 @@ Size getStringSize(String text, double fontSize, [double maxWidth]) {
     );
     renderParagraph.layout(constraints);
   }
-  return Size(renderParagraph.getMinIntrinsicWidth(fontSize).ceilToDouble(), renderParagraph.getMinIntrinsicHeight(fontSize).ceilToDouble()) ;
+  return Size(renderParagraph.getMinIntrinsicWidth(fontSize).ceilToDouble(), renderParagraph.getMinIntrinsicHeight(fontSize).ceilToDouble());
 }
 
 int getStringLines(String text, double fontSize, int maxLines, double maxWidth) {
@@ -186,4 +184,3 @@ int getStringLines(String text, double fontSize, int maxLines, double maxWidth) 
   textPainter.layout(maxWidth: maxWidth);
   return textPainter.computeLineMetrics().length;
 }
-
